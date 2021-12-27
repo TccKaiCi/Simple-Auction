@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.practiceController">
+   <children>
+      <Pane prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #E7E0C9;" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblNumberFinding" alignment="CENTER" layoutX="392.0" layoutY="33.0" text="100">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <Button fx:id="lbl_BackGame" layoutX="31.0" layoutY="27.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="97.0" text="&lt;| Back" />
+         </children>
+      </Pane>
+      <Pane fx:id="pane2" layoutY="100.0" prefHeight="500.0" prefWidth="800.0" AnchorPane.topAnchor="100.0" />
+   </children>
+</AnchorPane>

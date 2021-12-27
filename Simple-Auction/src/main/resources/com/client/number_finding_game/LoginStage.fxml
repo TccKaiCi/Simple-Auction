@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="LEFTPANE" prefHeight="438.0" prefWidth="700.0" style="-fx-background-radius: 0.5EM;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.number_finding_game.GUI.LoginController">
+   <children>
+      <ImageView fitHeight="438.0" fitWidth="700.0">
+         <image>
+            <Image url="@assets/bg.jpg" />
+         </image>
+         <effect>
+            <BoxBlur width="7.0" />
+         </effect>
+      </ImageView>
+      <TextField fx:id="tf_username" layoutX="242.0" layoutY="197.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: WHITE;" />
+      <PasswordField fx:id="pf_password" layoutX="242.0" layoutY="257.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #000; -fx-background-color: WHITE;" />
+      <Label fx:id="lbl_name" layoutX="279.0" layoutY="167.0" text="Tên đăng nhập">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_pass" layoutX="305.0" layoutY="224.0" text="Mật khẩu">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_Login" defaultButton="true" layoutX="242.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #A7DA46;" text="Đăng nhập">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_Register" defaultButton="true" layoutX="242.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #A7DA46;" text="Tạo tài khoản mới">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="109.0" layoutY="25.0" text="Number Finding Game " textFill="RED">
+         <font>
+            <Font name="System Bold" size="44.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_Back" defaultButton="true" disable="true" layoutX="190.0" layoutY="370.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" style="-fx-background-color: #A7DA46;" text="←" visible="false">
+         <font>
+            <Font name="Alien Encounters Solid" size="14.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbl_Error" disable="true" layoutX="262.0" layoutY="289.0" text="Sai tên đăng nhập hoặc mật khẩu" textFill="RED" visible="false" />
+      <Label fx:id="lbl_2" disable="true" layoutX="64.0" layoutY="170.0" text="Tên đăng nhập (email)" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_5" disable="true" layoutX="64.0" layoutY="290.0" text="Nhập mật khẩu mới" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_6" disable="true" layoutX="58.0" layoutY="330.0" text="Nhập lại mật khẩu" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_1" disable="true" layoutX="64.0" layoutY="130.0" text="Họ tên" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_4" disable="true" layoutX="64.0" layoutY="250.0" text="Giới tính" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_3" disable="true" layoutX="64.0" layoutY="210.0" text="Ngày sinh" visible="false" AnchorPane.leftAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="dk_name" disable="true" layoutX="277.0" layoutY="130.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <TextField fx:id="dk_username" disable="true" layoutX="277.0" layoutY="170.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <DatePicker fx:id="dk_dob" disable="true" layoutX="277.0" layoutY="210.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <RadioButton fx:id="dk_male" disable="true" layoutX="277.0" layoutY="250.0" mnemonicParsing="false" selected="true" text="Nam" visible="false" AnchorPane.leftAnchor="250.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="dk_female" disable="true" layoutX="325.0" layoutY="250.0" mnemonicParsing="false" text="Nữ" visible="false" AnchorPane.leftAnchor="325.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="dk_other" disable="true" layoutX="396.0" layoutY="250.0" mnemonicParsing="false" text="Khác" visible="false" AnchorPane.leftAnchor="396.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <PasswordField fx:id="dk_pass" disable="true" layoutX="277.0" layoutY="290.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <PasswordField fx:id="dk_retype" disable="true" layoutX="276.0" layoutY="330.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: black;" visible="false" AnchorPane.leftAnchor="250.0" />
+      <Label fx:id="dk_passError" alignment="CENTER" layoutX="491.0" layoutY="335.0" prefHeight="17.0" prefWidth="180.0" style="-fx-background-color: red;" text="Nhập lại không giống mật khẩu" textFill="WHITE" visible="false" />
+      <Button fx:id="btn_submit" defaultButton="true" disable="true" layoutX="241.0" layoutY="367.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #D6B5A7; -fx-border-color: #000;" text="Xác nhận" visible="false">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="dk_emailError" alignment="CENTER" layoutX="491.0" layoutY="174.0" prefHeight="17.0" prefWidth="111.0" style="-fx-background-color: red;" text="Sai cú pháp email" textFill="WHITE" visible="false" />
+   </children>
+</AnchorPane>
