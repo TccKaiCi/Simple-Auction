@@ -1,15 +1,11 @@
 package com.server.number_finding_game;
 
-import com.server.number_finding_game.Memory;
-import com.server.number_finding_game.NewServer;
-
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketAddress;
 
 public class ChatServerThread extends Thread {
-    private String LobbyID = "";
-    private String uid = "";
+    private String userName = "";
     private NewServer newServer = null;
     private Socket socket = null;
     private SocketAddress ID = null;
@@ -30,20 +26,12 @@ public class ChatServerThread extends Thread {
         return ID;
     }
 
-    public String getLobbyID() {
-        return LobbyID;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setLobbyID(String Lobby) {
-        this.LobbyID = Lobby;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void send(String message) {

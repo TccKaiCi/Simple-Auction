@@ -14,8 +14,7 @@ public class LoginForm extends Application {
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("LoginStage.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 700, 438);
-            stage.initStyle(StageStyle.TRANSPARENT);
+            Scene scene = new Scene(fxmlLoader.load(), 350, 330);
             stage.setResizable(false);
             stage.setTitle("Number finding game");
             scene.setFill(Color.TRANSPARENT);
@@ -28,6 +27,5 @@ public class LoginForm extends Application {
 
     public static void main(String[] args) {
         launch();
-
     }
 }

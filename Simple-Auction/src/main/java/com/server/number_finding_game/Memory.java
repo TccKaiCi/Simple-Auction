@@ -1,9 +1,6 @@
 package com.server.number_finding_game;
 
-import com.DTO.Ranking;
-import com.DTO.UserAccountDTO;
-
-import java.util.HashMap;
+import com.DTO.UsersDTO;
 
 /**
  * Information data storage
@@ -12,11 +9,8 @@ import java.util.HashMap;
 public class Memory {
     public static NewClient client = new NewClient();
 
-    public static UserAccountDTO userAccountDTO = new UserAccountDTO();
-    public static Ranking rankingDTO = new Ranking();
+    public static UsersDTO usersDTO = new UsersDTO();
 
-    public static String userColor;
-    public static HashMap<String,String> otherUserInfor_Color = new HashMap<>();
 
 //    ======================================================================
 //    ======================================================================

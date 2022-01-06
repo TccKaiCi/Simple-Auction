@@ -95,28 +95,10 @@ public class NewClient implements Runnable {
                                 } else {
                                     if (job[0].equalsIgnoreCase("Account")) {
                                         String[] arr = job[1].split(":");
-                                        Memory.userAccountDTO.setStrUid(arr[0]);
-                                        Memory.userAccountDTO.setStrUserName(arr[1]);
-                                        Memory.userAccountDTO.setStrNameInf(arr[2]);
-                                        Memory.userAccountDTO.setStrPassWord(arr[3]);
-                                        Memory.userAccountDTO.setStrGender(arr[4]);
-                                        Memory.userAccountDTO.setStrDayOfBirth(arr[5]);
-                                    } else {
-                                        // UserColor;Color
-                                        if (job[0].equalsIgnoreCase("UserColor")) {
-                                            //NAME:COLOR:NAME2:COLOR2:NAME3:COLOR3
-                                            //0:1:2:3:4:5
-                                            String[] arr = job[1].split(":");
-                                            Memory.otherUserInfor_Color.put(arr[0], arr[1]);
-                                            Memory.otherUserInfor_Color.put(arr[2], arr[3]);
-                                            Memory.otherUserInfor_Color.put(arr[4], arr[5]);
-
-                                            for (Map.Entry<String, String> entry : Memory.otherUserInfor_Color.entrySet() ) {
-                                                if (entry.getKey().equalsIgnoreCase(Memory.userAccountDTO.getStrNameInf())) {
-                                                    Memory.userColor = entry.getValue();
-                                                }
-                                            }
-                                        }
+                                        Memory.usersDTO.setStrUserName(arr[0]);
+                                        Memory.usersDTO.setStrHashPassWord(arr[1]);
+                                        Memory.usersDTO.setIntBalance(Integer.parseInt(arr[2]));
+                                        Memory.usersDTO.setBoolLockStatus(Boolean.valueOf(arr[3]));
                                     }
                                 }
                             }
