@@ -4,6 +4,7 @@ import com.DTO.UsersDTO;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UsersDAO {
     MyConnectUnit connect;
@@ -30,6 +31,22 @@ public class UsersDAO {
         }
         connect.Close();
         return DTOs;
+    }
+
+    public Boolean update(UsersDTO tk) throws Exception {
+        connect = new MyConnectUnit();
+
+        // tạo đối tượng truyền vào
+        HashMap<String, Object> insertValues = new HashMap<>();
+        insertValues.put("userName", tk.getStrUserName());
+        insertValues.put("balance", tk.getIntBalance());
+
+        String condition = " userName = '" + tk.getStrUserName() + "'";
+
+        Boolean check = connect.Update(strTableName, insertValues, condition);
+
+        connect.Close();
+        return check;
     }
 
     public ArrayList<UsersDTO> readDB(String condition) throws Exception {

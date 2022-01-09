@@ -2,6 +2,7 @@ package com.server.number_finding_game;
 
 import com.BUS.UsersBUS;
 import com.DTO.UsersDTO;
+import com.server.number_finding_game.GUI.ServerController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -12,14 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-// SERVER : Multi Server
-// TIPE : Two-Way Communication (Client to Server, Server to Client)
-// DESCRIPTION : 
-// A simple server that will accept multi client connection and display everything the client says on the screen. 
-// The Server can handle multiple clients simultaneously.
-// The Server can sends all text received from any of the connected clients to all clients, 
-// this means the Server has to receive and send, and the client has to send as well as receive.
-// If the client user types "exit", the client will quit.
+
 public class NewServer implements Runnable {
     public int softLimit = 40;
     public int hardLimit = 45;
@@ -29,10 +23,15 @@ public class NewServer implements Runnable {
     private Thread thread = null;
     private final ChatServerThread[] clients = new ChatServerThread[hardLimit];
 
-    private int intTime = 100;
+    public int intTime = 100;
     private int clientCount = 0;
-    HashMap<String, String> userStatus = new HashMap<>();
-    UsersBUS accountBus;
+
+    // for user bid
+    public int bidTemp = 0;
+    public String userBid = "";
+
+    public HashMap<String, String> userStatus = new HashMap<>();
+    public static UsersBUS listUsers;
 
     public static void main(String[] args) {
         NewServer news = new NewServer();
@@ -42,7 +41,7 @@ public class NewServer implements Runnable {
         try {
             serverSocket = new ServerSocket(port);
             // khởi tạo
-            accountBus = new UsersBUS();
+            listUsers = new UsersBUS();
             System.out.println("Server started on port " + serverSocket.getLocalPort() + "...");
             System.out.println("Waiting for client...");
             thread = new Thread(this);
@@ -117,37 +116,55 @@ public class NewServer implements Runnable {
                         dtotmp.setStrHashPassWord(bytesToHex(encodedhash));
 
                         // kiểm tra tài khoản : username, password
-                        if (accountBus.kiemTraDangNhap(dtotmp)) {
-                            boolean valid = true;
-                            dtotmp = accountBus.getUserAccountByUserName_PassWord(dtotmp);
+                        if (listUsers.kiemTraDangNhap(dtotmp)) {
+                            if (!listUsers.kiemTraTrangThai(dtotmp)) {
+                                clients[findClient(ID)].send("Your account has been locked");
+                            } else {
+                                boolean valid = true;
+                                dtotmp = listUsers.getUserAccountByUserName_PassWord(dtotmp);
 
-                            clients[findClient(ID)].setUserName(dtotmp.getStrUserName());
+                                clients[findClient(ID)].setUserName(dtotmp.getStrUserName());
 
-                            for (int i = 0; i < clientCount; i++) {
-                                if (clients[i].getUserName().equalsIgnoreCase(dtotmp.getStrUserName())) {
-                                    if (clients[i].getID() == ID) {
-                                        continue;
+                                for (int i = 0; i < clientCount; i++) {
+                                    if (clients[i].getUserName().equalsIgnoreCase(dtotmp.getStrUserName())) {
+                                        if (clients[i].getID() == ID) {
+                                            continue;
+                                        }
+                                        clients[findClient(ID)].send("Account are sign in on other address");
+                                        valid = false;
                                     }
-                                    clients[findClient(ID)].send("Account are sign in on other address");
-                                    valid = false;
+                                }
+
+                                if (valid) {
+                                    userStatus.put(clients[findClient(ID)].getUserName(), "online");
+                                    clients[findClient(ID)].send("valid user");
+
+                                    // return for client all infor user
+
+                                    String sendmess = "Account;" +
+                                            dtotmp.getStrUserName() + ":" +
+                                            dtotmp.getStrHashPassWord() + ":" +
+                                            dtotmp.getIntBalance() + ":" +
+                                            dtotmp.getBoolLockStatus();
+
+                                    // set uid
+                                    Thread.sleep(500);
+                                    clients[findClient(ID)].send(sendmess);
+                                    clients[findClient(ID)].setActive(true);
                                 }
                             }
+                        }
+                        break;
+                    case "UserBID":
+                        //UserBID;USername;bid
+                        if (bidTemp < Integer.parseInt(inputMessenger[2])) {
 
-                            if (valid) {
-                                userStatus.put(clients[findClient(ID)].getUserName(), "online");
-                                clients[findClient(ID)].send("valid user");
-                                // return for client all infor user
+                            bidTemp = Integer.parseInt(inputMessenger[2]);
+                            userBid = inputMessenger[1];
 
-                                String sendmess = "Account;" +
-                                        dtotmp.getStrUserName() + ":" +
-                                        dtotmp.getStrHashPassWord() + ":" +
-                                        dtotmp.getIntBalance() + ":" +
-                                        dtotmp.getBoolLockStatus();
+                            listUsers.lock_unclock_UserName(userBid);
 
-                                // set uid
-                                Thread.sleep(1000);
-                                clients[findClient(ID)].send(sendmess);
-                            }
+                            ServerController.tempProduct.setBoolSoldStatus(true);
                         }
                         break;
                 }
@@ -157,13 +174,16 @@ public class NewServer implements Runnable {
 
     public void sendMessengerToAllInLobby(String input) {
         for (int i = 0; i < clientCount; i++) {
-            clients[i].send(input);
+            if (clients[i].getActive()) {
+                clients[i].send(input);
+            }
         }
     }
 
     public synchronized void remove(SocketAddress ID) {
         if (findClient(ID) != -1) {
             userStatus.put(clients[findClient(ID)].getUserName(), "offline");
+            clients[findClient(ID)].setActive(false);
 
             int index = findClient(ID);
             if (index >= 0) {
@@ -206,12 +226,6 @@ public class NewServer implements Runnable {
         return hexString.toString();
     }
 
-    private static String Hash(String str) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] encodedhash = digest.digest(
-                str.getBytes(StandardCharsets.UTF_8));
-        return bytesToHex(encodedhash);
-    }
 
     public void setIntTime(int intTime) {
         this.intTime = intTime;

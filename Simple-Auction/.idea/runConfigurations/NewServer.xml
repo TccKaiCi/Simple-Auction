@@ -4,7 +4,7 @@
     <module name="Simple_Auction" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.server.number_finding_game.*" />
+        <option name="PATTERN" value="com.client.number_finding_game.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

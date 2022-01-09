@@ -21,54 +21,47 @@ public class ProductsBUS {
         list_DTO = DAO.readDB();
     }
 
-    /**
-     * thêm 1 tài khoản vào danh sách và database
-     *
-     * @return true nếu thành công
-     */
-    public Boolean add(ProductsDTO DTO) throws Exception {
-        if (DAO.add(DTO)) {
-            list_DTO.add(DTO);
+    public int getValueByProduct(String product) {
+        for (ProductsDTO dto : list_DTO) {
+            if (dto.getStrProductName().equals(product)) {
+                return dto.getIntStartingPrice();
+            }
         }
+        return 0;
+    }
+
+    public String getImageByProduct(String product) {
+        for (ProductsDTO dto : list_DTO) {
+            if (dto.getStrProductName().equals(product)) {
+                return dto.getStrImageUrl();
+            }
+        }
+        return null;
+    }
+
+
+    public Boolean update(ProductsDTO DTO) throws Exception {
+        if (DAO.update(DTO)) {
+            for (ProductsDTO dto : list_DTO) {
+                if (dto.getStrProductName().equals(DTO.getStrProductName())) {
+                    dto.setBoolSoldStatus(true);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
 
-    /**
-     * Get data by Json
-     * @return
-     */
-//    public String initJsonRankTable() {
-//        try {
-//            UsersBUS bus = new UsersBUS();
-//            StringBuilder sb = new StringBuilder();
-//
-////        open json
-//            sb.append("{\n" +
-//                    "  \"data\": [");
-//
-//            list_DTO.forEach(model -> {
-//                sb.append("{\n" +
-//                        "      \"strUID\": " + model.getStrUid() + " ,\n" +
-//                        "      \"intPoint\": " + model.getIntPoint() + ",\n" +
-//                        "      \"strKetQua\": " + model.getStrKetQua() + ",\n" +
-//                        "      \"strNameInfor\": " + bus.getUserAccountByUserName_PassWord(model.getStrUid()) + "\n" +
-//                        "    },");
-//            });
-//
-////        delete end ","
-//            sb.deleteCharAt(sb.length() - 1);
-////        close json
-//            sb.append("\n" +
-//                    " \n]" +
-//                    "}");
-//
-//            return sb.toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//    }
+
+
+    public ArrayList<ProductsDTO> getList_DTO() {
+        return list_DTO;
+    }
+
+    public void setList_DTO(ArrayList<ProductsDTO> list_DTO) {
+        this.list_DTO = list_DTO;
+    }
 
 }

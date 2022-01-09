@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="LEFTPANE" prefHeight="420.0" prefWidth="674.0" style="-fx-background-radius: 0.5EM;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.server.number_finding_game.GUI.ServerController">
+   <children>
+      <ImageView fitHeight="271.0" fitWidth="344.0" layoutX="25.0" layoutY="144.0" pickOnBounds="true">
+         <image>
+            <Image url="@assets/frame.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbl_name" layoutX="180.0" layoutY="97.0" text="Product Name">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl_pass" layoutX="471.0" layoutY="97.0" text="Starting Price">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_Letgo" defaultButton="true" layoutX="428.0" layoutY="268.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" style="-fx-background-color: #A7DA46;" text="Đấu giá sản phẩm">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="lbl_Error" disable="true" layoutX="85.0" layoutY="230.0" text="Sai tên đăng nhập hoặc mật khẩu" textFill="RED" visible="false" />
+      <Label fx:id="lbl_name123" layoutX="177.0" layoutY="22.0" text="Simple Auction">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="0.0694444477558136" blue="0.0694444477558136" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.46052631735801697" green="0.2899610102176666" blue="0.2899610102176666" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <effect>
+            <Glow level="0.38" />
+         </effect>
+      </Label>
+      <ComboBox fx:id="cbb_Products" layoutX="25.0" layoutY="128.0" prefHeight="25.0" prefWidth="411.0" />
+      <TextField fx:id="tf_Price" editable="false" layoutX="484.0" layoutY="128.0" prefHeight="25.0" prefWidth="107.0" />
+      <Label fx:id="lbl_name1" layoutX="14.0" layoutY="7.0" text="User Online">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_numberUser" editable="false" layoutX="42.0" layoutY="37.0" prefHeight="25.0" prefWidth="60.0" />
+      <Label fx:id="lbl_name2" layoutX="456.0" layoutY="195.0" text="Time for auction">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_Time" layoutX="464.0" layoutY="226.0" />
+      <Button fx:id="btn_quit" layoutX="559.0" layoutY="375.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="93.0" style="-fx-background-color: red;" text="Thoát" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="img" fitHeight="187.0" fitWidth="256.0" layoutX="101.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/Products/Yugioh.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

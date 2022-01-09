@@ -4,7 +4,6 @@ package com.DTO;
  * For clients & server
  */
 public class ProductsDTO {
-
     private String strProductName;
     private int intStartingPrice;
     private String strImageUrl;
@@ -12,7 +11,7 @@ public class ProductsDTO {
 
 
     public ProductsDTO() {
-
+        this.boolSoldStatus = false;
     }
 
     public ProductsDTO(String strProductName, int intStartingPrice, String strImageUrl, Boolean boolSoldStatus) {
@@ -21,28 +20,6 @@ public class ProductsDTO {
         this.strImageUrl = strImageUrl;
         this.boolSoldStatus = boolSoldStatus;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public String getStrProductName() {

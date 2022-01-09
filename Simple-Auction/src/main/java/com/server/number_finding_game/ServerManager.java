@@ -1,54 +1,30 @@
 package com.server.number_finding_game;
 
-import java.net.SocketAddress;
-import java.util.Scanner;
+import com.client.number_finding_game.LoginForm;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
-public class ServerManager {
-    private static NewServer newServer;
+public class ServerManager extends Application {
 
     public static void main(String[] args) {
-        newServer = new NewServer();
-        Scanner scanner = new Scanner(System.in);
-
-        do {
-            System.out.println("Status: Hien thi user status");
-            System.out.println("Time: thoi gian");
-            System.out.println("lobby");
-            String s = scanner.nextLine();
-            if (s.equalsIgnoreCase("status")) {
-                displayStatus();
-                s = scanner.nextLine();
-            }
-            //thoiGian
-            if (s.equalsIgnoreCase("Time")) {
-                int time;
-                do {
-                    System.out.println("thời gian: ");
-                    s = scanner.nextLine();
-                } while (!isInteger(s) && s != null);
-                time = Integer.parseInt(s);
-
-                newServer.setIntTime(time);
-                System.out.println("Cài đặt thành công");
-            }
-        } while (true);
+        launch(args);
     }
 
-    public static void displayStatus() {
-        System.out.println("Status Account:\n");
-        newServer.userStatus.forEach((k, v) -> System.out.println(k + " : " + v));
-    }
-
-    public static boolean isInteger(String var) {
+    @Override
+    public void start(Stage primaryStage) {
         try {
-            Integer.parseInt(var);
-            return true;
-
-            // return false when "var" can't be converted to integer
-            // NumberFormatException will return null
-        } catch (NumberFormatException e) {
-            return false;
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Server.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 674, 420);
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Number finding game");
+            scene.setFill(Color.TRANSPARENT);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 }

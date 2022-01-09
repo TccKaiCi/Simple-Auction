@@ -43,23 +43,16 @@ public class ProductsDAO {
         return readDB(null);
     }
 
-
-    /**
-     * Tạo thêm 1 dựa theo đã có thông tin trước
-     *
-     * @return true nếu thành công
-     */
-    public Boolean add(ProductsDTO tk) throws Exception {
+    public Boolean update(ProductsDTO tk) throws Exception {
         connect = new MyConnectUnit();
 
         // tạo đối tượng truyền vào
         HashMap<String, Object> insertValues = new HashMap<>();
-        insertValues.put("productName", tk.getStrProductName());
-        insertValues.put("startingPrice ", tk.getIntStartingPrice());
-        insertValues.put("imageUrl", tk.getStrImageUrl());
-        insertValues.put("soldStatus", tk.getBoolSoldStatus());
+        insertValues.put("soldStatus", 1);
 
-        Boolean check = connect.Insert(strTableName, insertValues);
+        String condition = " productName = '" + tk.getStrProductName() + "'";
+
+        Boolean check = connect.Update(strTableName, insertValues, condition);
 
         connect.Close();
         return check;

@@ -5,8 +5,10 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 public class ChatServerThread extends Thread {
+    // for user
     private String userName = "";
-    private NewServer newServer = null;
+    private Boolean active = false;
+
     private Socket socket = null;
     private SocketAddress ID = null;
 
@@ -15,11 +17,21 @@ public class ChatServerThread extends Thread {
     private BufferedOutputStream bos = null;
     private DataOutputStream dos = null;
 
+    private NewServer newServer = null;
+
     public ChatServerThread(NewServer _New_server, Socket _socket) {
         super();
         newServer = _New_server;
         socket = _socket;
         ID = socket.getRemoteSocketAddress();
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public SocketAddress getID() {
@@ -55,7 +67,6 @@ public class ChatServerThread extends Thread {
             dos = new DataOutputStream(bos);
 
             while (true) {
-                //gui cho player biet no dang o lobby nao, reset sau khi lobby isEnd
                 newServer.handle(ID, dis.readUTF());
             }
         } catch (IOException e) {

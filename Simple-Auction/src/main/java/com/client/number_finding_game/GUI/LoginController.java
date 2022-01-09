@@ -1,7 +1,7 @@
 package com.client.number_finding_game.GUI;
 
 import com.client.number_finding_game.LoginForm;
-import com.server.number_finding_game.Memory;
+import com.client.number_finding_game.MemoryClients;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +30,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Memory.client.Connect();
+        MemoryClients.client.Connect();
         btn_Login.setOnAction(this::onClick);
         btn_Login.setOnMouseEntered(e -> btn_Login.setStyle(HOVERED_BUTTON_STYLE));
         btn_Login.setOnMouseExited(e -> btn_Login.setStyle(IDLE_BUTTON_STYLE));
@@ -40,25 +40,29 @@ public class LoginController implements Initializable {
         try {
             String SendingPack = "SIGNIN;" + tf_username.getText() + ";" + pf_password.getText();
             if (!pf_password.getText().equals("")) {
-                Memory.client.sendMessenger(SendingPack);
+                MemoryClients.client.sendMessenger(SendingPack);
                 System.out.println(SendingPack);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setTitle("Number finding game");
                 stage.setResizable(false);
                 //need add function prevent signin when password wrong
-                if (Memory.messenger.equalsIgnoreCase("valid user")) {
-                    while (!Memory.messenger.contains("Account")) {
-                        System.out.println("");
+                if (MemoryClients.messenger.equalsIgnoreCase("valid user")) {
+                    while (!MemoryClients.messenger.contains("Account")) {
+                        System.out.print("");
                     }
-                    FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Waiting_room.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("AuctionRoom.fxml"));
                     Parent root = fxmlLoader.load();
                     stage.setScene(new Scene(root));
                     stage.show();
                 } else {
-                    if (Memory.messenger.contains("Account are sign in on other address")) {
+                    if (MemoryClients.messenger.contains("Account are sign in on other address")) {
                         lbl_Error.setText("Account are sign in on other device");
                     } else {
-                        lbl_Error.setText("Wrong username or password");
+                        if (MemoryClients.messenger.contains("locked")) {
+                            lbl_Error.setText("Your account has been locked");
+                        } else {
+                            lbl_Error.setText("Wrong username or password");
+                        }
                     }
                     setVi_TRUE_Dis_FALSE(lbl_Error);
                 }

@@ -54,5 +54,4 @@ public class UsersDTO {
 
     public void setBoolLockStatus(Boolean boolLockStatus) {
         this.boolLockStatus = boolLockStatus;
-    }
-}
+    }}

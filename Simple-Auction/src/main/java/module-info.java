@@ -9,8 +9,11 @@ module com.client.number_finding_game {
     exports com.client.number_finding_game.GUI;
     opens com.client.number_finding_game.GUI to javafx.fxml;
     exports com.client.number_finding_game;
+    opens com.server.number_finding_game to javafx.fxml;
+    exports com.server.number_finding_game.GUI;
+    opens com.server.number_finding_game.GUI to javafx.fxml;
+    exports com.server.number_finding_game;
     exports com.DTO;
     opens com.DTO to javafx.fxml;
     exports com.BUS;
-    opens com.BUS to javafx.fxml;
-}
+    opens com.BUS to javafx.fxml;}
