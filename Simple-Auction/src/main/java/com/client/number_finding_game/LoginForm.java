@@ -16,7 +16,7 @@ public class LoginForm extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("LoginStage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 350, 330);
             stage.setResizable(false);
-            stage.setTitle("Number finding game");
+            stage.setTitle("3118410043_TangChiChung");
             scene.setFill(Color.TRANSPARENT);
             stage.setScene(scene);
             stage.show();

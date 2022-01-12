@@ -19,7 +19,7 @@ public class ServerManager extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(LoginForm.class.getResource("Server.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 674, 420);
             primaryStage.setResizable(false);
-            primaryStage.setTitle("Number finding game");
+            primaryStage.setTitle("3118410043_TangChiChung");
             scene.setFill(Color.TRANSPARENT);
             primaryStage.setScene(scene);
             primaryStage.show();
