@@ -28,6 +28,4 @@ public class MemoryClients {
 
     //    About Client to CLien
     public static String messenger = " ";
-
-    static String statusMessenger = " ";
 }

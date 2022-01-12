@@ -46,7 +46,7 @@
       </Pane>
       <Line endX="337.0" fill="RED" layoutX="259.0" layoutY="69.0" startX="-129.0" stroke="RED" />
       <TextField fx:id="tf_bid" layoutX="220.0" layoutY="345.0" prefHeight="25.0" prefWidth="181.0" visible="false" />
-      <Label fx:id="lbl_nameProduct" alignment="CENTER" layoutX="282.0" layoutY="145.0" prefHeight="32.0" prefWidth="396.0" visible="false">
+      <Label fx:id="lbl_nameProduct" alignment="TOP_LEFT" layoutX="450.0" layoutY="113.0" prefHeight="74.0" prefWidth="243.0" text="aaas dasd asd asdsad sad asd asd asds" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -120,6 +120,11 @@
          <effect>
             <Glow level="0.38" />
          </effect>
+      </Label>
+      <Label fx:id="lbl_statusBID" alignment="CENTER" layoutX="120.0" layoutY="316.0" prefHeight="32.0" prefWidth="396.0" text="Bid thành công" textFill="RED">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
       </Label>
    </children>
 </AnchorPane>

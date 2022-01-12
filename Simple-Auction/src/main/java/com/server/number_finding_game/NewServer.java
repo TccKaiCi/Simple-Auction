@@ -30,12 +30,9 @@ public class NewServer implements Runnable {
     public int bidTemp = 0;
     public String userBid = "";
 
+    // for user signin
     public HashMap<String, String> userStatus = new HashMap<>();
     public static UsersBUS listUsers;
-
-    public static void main(String[] args) {
-        NewServer news = new NewServer();
-    }
 
     public NewServer() {
         try {
@@ -81,6 +78,7 @@ public class NewServer implements Runnable {
         return -1;
     }
 
+    // duoc goi tu ham run ben chatthread
     public synchronized void handle(SocketAddress ID, String input) throws Exception {
         if (clientCount > softLimit) {
             clients[findClient(ID)].send("Server is very busy now");
@@ -125,6 +123,7 @@ public class NewServer implements Runnable {
 
                                 clients[findClient(ID)].setUserName(dtotmp.getStrUserName());
 
+                                // kiem tra account da signin hay chua
                                 for (int i = 0; i < clientCount; i++) {
                                     if (clients[i].getUserName().equalsIgnoreCase(dtotmp.getStrUserName())) {
                                         if (clients[i].getID() == ID) {
@@ -135,12 +134,12 @@ public class NewServer implements Runnable {
                                     }
                                 }
 
+                                // neu account chua signin
                                 if (valid) {
                                     userStatus.put(clients[findClient(ID)].getUserName(), "online");
                                     clients[findClient(ID)].send("valid user");
 
                                     // return for client all infor user
-
                                     String sendmess = "Account;" +
                                             dtotmp.getStrUserName() + ":" +
                                             dtotmp.getStrHashPassWord() + ":" +

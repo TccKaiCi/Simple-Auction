@@ -7,17 +7,12 @@ import java.net.Socket;
 public class NewClient implements Runnable {
     private final String serverName = "localhost";
     private final int serverPort = 8081;
+
     private Socket socket = null;
     private Thread thread = null;
+
     private DataInputStream dis = null;
     private DataOutputStream dos = null;
-    private ChatClientThread client = null;
-
-    public static void main(String[] args) {
-        NewClient client = new NewClient();
-        client.Connect();
-    }
-
 
     //    is connect tho server???
     public boolean Connect() {
@@ -25,9 +20,10 @@ public class NewClient implements Runnable {
             socket = new Socket(serverName, serverPort);
             System.out.println("Client started on port " + socket.getLocalPort() + "...");
             System.out.println("Connected to server " + socket.getRemoteSocketAddress());
-            dis = new DataInputStream(System.in);
+
+            dis = new DataInputStream(socket.getInputStream());
             dos = new DataOutputStream(socket.getOutputStream());
-            client = new ChatClientThread(this, socket);
+
             thread = new Thread(this);
             thread.start();
             return true;
@@ -41,16 +37,8 @@ public class NewClient implements Runnable {
     public void run() {
         while (thread != null) {
             try {
-                System.out.print("Message to server : ");
-                dos.writeUTF(dis.readLine());
-                dos.flush();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    System.out.println("Error : " + e.getMessage());
-                }
+                handleMessage(dis.readUTF());
             } catch (IOException e) {
-                System.out.println("Sending error : " + e.getMessage());
                 stop();
             }
         }
@@ -92,6 +80,14 @@ public class NewClient implements Runnable {
                             break;
                         case "UserWin":
                             //UserWin;User_3;999999
+
+                            if (inputMessenger[1].equals(MemoryClients.usersDTO.getStrUserName())) {
+                                MemoryClients.usersDTO.setIntBalance(
+                                        MemoryClients.usersDTO.getIntBalance() -
+                                                Integer.parseInt(inputMessenger[2])
+                                );
+                            }
+
                             MemoryClients.isAuctionStatus = 2;
                             MemoryClients.whoWin = inputMessenger[1] + ": is winner \n with bid is :" + inputMessenger[2];
                             break;
@@ -112,25 +108,6 @@ public class NewClient implements Runnable {
         } catch (IOException e) {
             System.out.println("Error closing : " + e.getMessage());
         }
-        client.close();
-    }
-
-    public String getServer() {
-        return String.valueOf(socket.getRemoteSocketAddress());
-    }
-
-    //    Try to find other servver
-    public boolean findServer() {
-        try {
-            socket = new Socket(serverName, serverPort);
-            System.out.println("Client started on port " + socket.getLocalPort() + "...");
-            System.out.println("Connected to server " + socket.getRemoteSocketAddress());
-            System.out.println("Disconnect to server");
-            socket.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
     }
 
     public void sendMessenger(String line) {
@@ -140,7 +117,7 @@ public class NewClient implements Runnable {
             dos.flush();
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 System.out.println("Error : " + e.getMessage());
             }

@@ -24,7 +24,7 @@ public class AuctionRoomController implements Initializable {
     @FXML
     private Button btn_quit, btn_bid;
     @FXML
-    Label lbl_Result, lbl_name, lbl_bal, lbl_nameProduct, lbl_namePrice, lbl_nameTime, lbl_name1211, lbl_name12, lbl_name121;
+    Label lbl_statusBID, lbl_Result, lbl_name, lbl_bal, lbl_nameProduct, lbl_namePrice, lbl_nameTime, lbl_name1211, lbl_name12, lbl_name121;
     @FXML
     TextField tf_bid;
     @FXML
@@ -37,11 +37,14 @@ public class AuctionRoomController implements Initializable {
     private static final String HOVERED_BUTTON_STYLE = "-fx-background-color: #4E9525; ";
 
     String urlImage = new File("").getAbsolutePath() + "\\src\\main\\resources\\com\\client\\number_finding_game\\assets\\Products\\";
+    public double bidStatus_Y;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btn_quit.setOnAction(this::setBtn_quit);
         btn_bid.setOnAction(this::setBtn_bid);
+
+        bidStatus_Y = lbl_statusBID.getLayoutY();
 
         setHoverEffect();
         Node[] node = {btn_bid, btn_quit};
@@ -78,6 +81,8 @@ public class AuctionRoomController implements Initializable {
 
         Node[] nodeResult = {lbl_Result};
 
+        lbl_statusBID.setVisible(false);
+
         // change value display
         Timer countDown = new Timer();
         countDown.scheduleAtFixedRate(new TimerTask() {
@@ -110,7 +115,8 @@ public class AuctionRoomController implements Initializable {
 
                             productImage.setImage(new Image(urlImage + MemoryClients.productsDTO.getStrImageUrl()));
 
-                            MemoryClients.isAuctionStatus = 0;
+//                            Lag
+//                            MemoryClients.isAuctionStatus = 0;
                             break;
                         case 2:
                             lbl_Result.setText(MemoryClients.whoWin);
@@ -118,16 +124,9 @@ public class AuctionRoomController implements Initializable {
                             setVisible(nodePlay, false);
                             setVisible(nodeResult, true);
 
-                            String[] a = MemoryClients.whoWin.split(":");
-                            if (MemoryClients.usersDTO.getStrUserName() == a[0]) {
-                                int tempDelete = Integer.parseInt(a[2]);
-
-                                MemoryClients.usersDTO.setIntBalance(MemoryClients.usersDTO.getIntBalance() - tempDelete);
-
-                                lbl_bal.setText(
-                                        formart(MemoryClients.usersDTO.getIntBalance())
-                                );
-                            }
+                            lbl_bal.setText(
+                                    formart(MemoryClients.usersDTO.getIntBalance())
+                            );
                             break;
                     }
                 });
@@ -172,18 +171,56 @@ public class AuctionRoomController implements Initializable {
     }
 
     public void setBtn_bid(ActionEvent event) {
-        int valueBid = Integer.parseInt(tf_bid.getText());
-        if (valueBid >= MemoryClients.productsDTO.getIntStartingPrice()
-                && valueBid <= MemoryClients.usersDTO.getIntBalance()) {
-            MemoryClients.client.sendMessenger(
-                    "UserBID" + ";" +
-                            MemoryClients.usersDTO.getStrUserName() + ";" +
-                            valueBid
-            );
+        try {
+            int valueBid = Integer.parseInt(tf_bid.getText());
+
+            if (valueBid >= MemoryClients.productsDTO.getIntStartingPrice()
+                    && valueBid <= MemoryClients.usersDTO.getIntBalance()) {
+                MemoryClients.client.sendMessenger(
+                        "UserBID" + ";" +
+                                MemoryClients.usersDTO.getStrUserName() + ";" +
+                                valueBid
+                );
+
+                statusBidDiaply (true);
+            } else {
+                statusBidDiaply(false);
+            }
+
+
+        } catch (Exception e) {
         }
     }
 
     public void setBtn_quit(ActionEvent event) {
+        MemoryClients.client.sendMessenger("exit");
         System.exit(0);
+    }
+
+    public void statusBidDiaply(boolean flag) {
+        lbl_statusBID.setLayoutY(bidStatus_Y);
+        Timer countDown = new Timer();
+        countDown.scheduleAtFixedRate(new TimerTask() {
+            int x = 50;
+
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    if (x == 0) {
+                        countDown.cancel();
+                        lbl_statusBID.setVisible(false);
+                    } else {
+                        x--;
+                        lbl_statusBID.setLayoutY(lbl_statusBID.getLayoutY() - 1.0);
+                        if (flag) {
+                            lbl_statusBID.setText("Bid thành công");
+                        } else {
+                            lbl_statusBID.setText("Bid thất bại");
+                        }
+                        lbl_statusBID.setVisible(true);
+                    }
+                });
+            }
+        }, 0, 10);
     }
 }

@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +39,9 @@ public class ServerController implements Initializable {
     @FXML
     ImageView img;
 
+    // for user
+    @FXML
+    Label lbl_high, lbl_high_1, lbl_high_2, lbl_high_3, lbl_high_4;
 
     private NewServer newServer;
 
@@ -67,6 +71,10 @@ public class ServerController implements Initializable {
         // set combobox value
         setCbbValue();
 
+        // for client
+        Node[] node = {lbl_high, lbl_high_1, lbl_high_2, lbl_high_3, lbl_high_4};
+        setVisible(node, false);
+
         // set time UI
         tf_Time.setText(String.valueOf(newServer.intTime));
 
@@ -93,6 +101,17 @@ public class ServerController implements Initializable {
                         if (entry.getValue().equals("online")) {
                             count++;
                         }
+                    }
+
+                    Node[] node = {lbl_high, lbl_high_1, lbl_high_2, lbl_high_3, lbl_high_4};
+
+                    if (newServer.bidTemp != 0 && !newServer.userBid.equals("")) {
+                        lbl_high_3.setText(newServer.userBid);
+                        lbl_high_4.setText(String.valueOf(newServer.bidTemp));
+
+                        setVisible(node, true);
+                    } else {
+                        setVisible(node, false);
                     }
 
                     tf_numberUser.setText(String.valueOf(count));
@@ -211,6 +230,11 @@ public class ServerController implements Initializable {
         newServer.sendMessengerToAllInLobby(s);
     }
 
+    public void setVisible(Node[] node, boolean value) {
+        for (Node item : node) {
+            item.setVisible(value);
+        }
+    }
     public void setCbbValue() {
 
         for (ProductsDTO dto : listProducts.getList_DTO()) {
@@ -219,15 +243,12 @@ public class ServerController implements Initializable {
             }
         }
         cbb_Products.getSelectionModel().select(0);
-        changeProductValue(String.valueOf(cbb_Products.getValue()));
 
         // change image for value
-        img.setImage(new Image(url +
-                listProducts.getImageByProduct(String.valueOf(cbb_Products.getValue()))
-        ));
-
+        changeProductValue(String.valueOf(cbb_Products.getValue()));
     }
 
+    // event change item in combobox
     private void setCbb(Event event) {
         changeProductValue(String.valueOf(cbb_Products.getValue()));
     }
@@ -236,13 +257,17 @@ public class ServerController implements Initializable {
         tf_Price.setText(String.valueOf(listProducts.getValueByProduct(product)));
 
         // change image for value
-        img.setImage(new Image(url +
-                listProducts.getImageByProduct(String.valueOf(cbb_Products.getValue()))
-        ));
+        try {
+            img.setImage(new Image(url +
+                    listProducts.getImageByProduct(String.valueOf(product))
+            ));
+        } catch (Exception e) {
+        }
     }
 
 
     public void setBtn_quit(ActionEvent event) {
+        newServer.stop();
         System.exit(0);
     }
 }
